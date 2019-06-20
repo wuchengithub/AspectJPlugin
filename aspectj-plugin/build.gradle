@@ -1,0 +1,90 @@
+apply plugin: 'groovy'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.android.library'
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+
+version = "1.0.0"
+
+def siteUrl = 'https://github.com/wuchengithub/AspectJPlugin'      // 项目的主页
+def gitUrl = 'https://github.com/wuchengithub/AspectJPlugin.git'   // Git仓库的url
+group = "com.wookii.plugin"
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'jar'
+                // Add your description here
+                name 'AspectJ plugin for Android.'
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'wuchengithub'     //填写的一些基本信息
+                        name 'chenwu'
+                        email 'wuchenxy2015@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "wookii"
+        name = "AspectJX"   //发布到JCenter上的项目名字
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
+jar {
+    from {
+        zipTree(new File(project.projectDir.absolutePath + "/libs/aspectjtools.jar"))
+    }
+}
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:3.3.1'
+//    implementation 'com.android.tools.build:transform-api:1.5.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation files('libs/aspectjtools.jar')
+}

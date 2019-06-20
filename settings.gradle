@@ -1,1 +1,1 @@
-include ':app',':aspectj_plugin'
+include ':app', ':aspectj-plugin'
