@@ -1,12 +1,22 @@
 apply plugin: 'groovy'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven'
 //apply plugin: 'com.android.library'
+
+
 targetCompatibility = JavaVersion.VERSION_1_7
 sourceCompatibility = JavaVersion.VERSION_1_7
+//
+//install {
+//    repositories.mavenInstaller {
+//        pom.version = '0.0.1.1'
+//        pom.artifactId = 'aspectj-plugin'
+//        pom.groupId = 'com.wookii.plugin'
+//    }
+//}
 
-
-version = "1.0.0"
+version = "1.0.1"
 
 def siteUrl = 'https://github.com/wuchengithub/AspectJPlugin'      // 项目的主页
 def gitUrl = 'https://github.com/wuchengithub/AspectJPlugin.git'   // Git仓库的url

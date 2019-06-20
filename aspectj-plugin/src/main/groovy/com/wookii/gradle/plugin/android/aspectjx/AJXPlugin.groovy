@@ -51,7 +51,7 @@ class AJXPlugin implements Plugin<Project> {
 
         if (project.plugins.hasPlugin(AppPlugin)) {
             //build time trace
-            project.gradle.addListener(new TimeTrace())
+//            project.gradle.addListener(new TimeTrace())
 
             //register AspectTransform
             AppExtension android = project.extensions.getByType(AppExtension)
